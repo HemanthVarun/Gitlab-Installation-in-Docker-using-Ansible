@@ -43,11 +43,16 @@ sshpass -V
 Step 3: Enabling Password Authentication on Managed Node.
 ```
 sudo vim /etc/ssh/sshd_config.d/60-cloudimg-setting.conf  # for enabling password authentication between managed node and control node.
+```
 PasswordAuthentication no                                 # will be in first line
-PasswordAuthentication yes                                #  change it to yes from no
+PasswordAuthentication yes                                # change it to yes from no
+```
 sudo systemctl restart ssh                                # restart the ssh service
+```
+```
 sudo passwd ubuntu                                        # set password 
 ```
+
 
 ## Ansible_Playbooks
 1. Docker-Install.yml
@@ -175,7 +180,11 @@ sudo passwd ubuntu                                        # set password
 ## Running the Playbooks                                                                                       # Commands to run playbooks
 ```
 ansible-playbook -i /root/Ansible_Project/inventory.ini --ask-pass /root/Ansible_Project/docker-install.yml
+```
+```
 ansible-playbook -i /root/Ansible_Project/inventory.ini --ask-pass /root/Ansible_Project/gitlab-deploy.yml
+```
+```
 ansible-playbook -i /root/Ansible_Project/inventory.ini --ask-pass /root/Ansible_Project/backup.yml
 ```
 
