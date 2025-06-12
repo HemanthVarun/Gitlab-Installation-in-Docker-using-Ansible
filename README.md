@@ -3,17 +3,6 @@
 ## Project Overview
 This project uses Ansible playbooks to automate the installation of Docker and deployment of GitLab in a containerized environment. It helps simplify setup and management of GitLab on a target host.
 
-## Project structure:
-Gitlab-Installation-in-Docker-using-Ansible/
-│
-├── ansible_playbooks/
-│   ├── backup.yml               # Backs up GitLab data
-│   ├── docker_install.yml       # Installs Docker
-│   ├── gitlab-deploy.yml        # Deploys GitLab in Docker
-│   └── inventory.ini            # Contains managed node details
-│
-└── README.md                    # Project explanation
-
 The installation and deployment of GitLab within a Docker container on an AWS EC2 instance can be automated with Ansible, as this project illustrates.  Two EC2 instances must be set up: one as a Managed Node (the target machine where GitLab will be deployed) and another as a Control Node (which runs Ansible).
 
 ## setup
