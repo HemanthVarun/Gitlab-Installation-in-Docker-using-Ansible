@@ -51,7 +51,7 @@ sudo passwd ubuntu                                        # set password
 
 ## Ansible_Playbooks
 1. Docker-Install.yml
-'''
+'''yaml
 ---
 - name: Install Docker on Ubuntu
   hosts: all
@@ -103,7 +103,6 @@ sudo passwd ubuntu                                        # set password
         name: "{{ ansible_user_id }}"
         groups: docker
         append: yes
-'''
 
 2. Gitlab-deploy.yml
 '''
