@@ -42,12 +42,7 @@ sudo apt update && sudo apt install ansible sshpass -y
 sshpass -V
 ```
 
-Step 3: Ansible installation on control node.
-```
-sudo apt install ansible -y
-```
-
-Step 4: Enabling Password Authentication on Managed Node.
+Step 3: Enabling Password Authentication on Managed Node.
 ```
 sudo vim /etc/ssh/sshd_config.d/60-cloudimg-setting.conf  # for enabling password authentication between managed node and control node.
 ```
