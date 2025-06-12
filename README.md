@@ -3,6 +3,19 @@
 ## Project Overview
 This project uses Ansible playbooks to automate the installation of Docker and deployment of GitLab in a containerized environment. It helps simplify setup and management of GitLab on a target host.
 
+## Project Structure:
+'''
+Gitlab-Installation-in-Docker-using-Ansible/
+│
+├── ansible_playbooks/
+│   ├── backup.yml               # Backs up GitLab data
+│   ├── docker_install.yml       # Installs Docker
+│   ├── gitlab-deploy.yml        # Deploys GitLab in Docker
+│   └── inventory.ini            # Contains managed node details
+│
+└── README.md                    # Project explanation
+'''
+
 The installation and deployment of GitLab within a Docker container on an AWS EC2 instance can be automated with Ansible, as this project illustrates.  Two EC2 instances must be set up: one as a Managed Node (the target machine where GitLab will be deployed) and another as a Control Node (which runs Ansible).
 
 ## setup
@@ -22,18 +35,23 @@ Use SSH connect both instance.
 
 Step 2: Install Ansible and sshpass on Control Node.
 Ansible is required to run playbooks and manage the target node, "sshpass" is used for non-interactive SSH login via password.
+'''
 sudo apt update && sudo apt install ansible sshpass -y
 sshpass -V
+'''
 
 Step 3: Enabling Password Authentication on Managed Node.
+'''
 sudo vim /etc/ssh/sshd_config.d/60-cloudimg-setting.conf  # for enabling password authentication between managed node and control node.
 PasswordAuthentication no                                 # will be in first line
 PasswordAuthentication yes                                #  change it to yes from no
 sudo systemctl restart ssh                                # restart the ssh service
 sudo passwd ubuntu                                        # set password 
+'''
 
 ## Ansible_Playbooks
 1. Docker-Install.yml
+'''
 ---
 - name: Install Docker on Ubuntu
   hosts: all
@@ -85,8 +103,10 @@ sudo passwd ubuntu                                        # set password
         name: "{{ ansible_user_id }}"
         groups: docker
         append: yes
+'''
 
 2. Gitlab-deploy.yml
+'''
 ---
 - hosts: target_servers
   become: yes
@@ -112,8 +132,10 @@ sudo passwd ubuntu                                        # set password
           - "/srv/gitlab/config:/etc/gitlab"
           - "/srv/gitlab/logs:/var/log/gitlab"
           - "/srv/gitlab/data:/var/opt/gitlab"
+'''
 
 3. backup.yml
+'''
 ---
 - hosts: target_servers
   become: yes  # Ensure tasks run with root privileges
@@ -142,20 +164,25 @@ sudo passwd ubuntu                                        # set password
         job: "/root/gitlab_backup.sh"
         minute: "0"
         hour: "2"
+'''
 
 ## Inventory file
+'''
 [target_servers]
 [Managed-Node-ip] ansible_user=ubuntu ansible_ssh_pass=ubuntu ansible_become_pass=ubuntu
+'''
 
 ## Running the Playbooks                                                                                       # Commands to run playbooks
+''''
 ansible-playbook -i /root/Ansible_Project/inventory.ini --ask-pass /root/Ansible_Project/docker-install.yml
 ansible-playbook -i /root/Ansible_Project/inventory.ini --ask-pass /root/Ansible_Project/gitlab-deploy.yml
 ansible-playbook -i /root/Ansible_Project/inventory.ini --ask-pass /root/Ansible_Project/backup.yml
-
+'''
 
 ## Accessing the gitlab through browser:
+'''
 http://<managed-node-public-ip>
-
+'''
 
 ## Conclusion
 By completing this project, we have:
