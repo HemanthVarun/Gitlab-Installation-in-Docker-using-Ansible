@@ -1,0 +1,25 @@
+---
+- hosts: target_servers
+  become: yes
+  tasks:
+    - name: Pull GitLab Docker Image
+      docker_image:
+        name: gitlab/gitlab-ce
+        source: pull
+
+    - name: Run GitLab Container
+      docker_container:
+        name: gitlab
+        image: gitlab/gitlab-ce
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
+          - "443:443"
+          - "2222:22"
+        env:
+          GITLAB_ROOT_PASSWORD: "your_secure_password"
+        volumes:
+          - "/srv/gitlab/config:/etc/gitlab"
+          - "/srv/gitlab/logs:/var/log/gitlab"
+          - "/srv/gitlab/data:/var/opt/gitlab"

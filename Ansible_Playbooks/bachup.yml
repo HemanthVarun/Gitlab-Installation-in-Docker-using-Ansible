@@ -1,0 +1,28 @@
+---
+- hosts: target_servers
+  become: yes  # Ensure tasks run with root privileges
+
+  tasks:
+    - name: Create GitLab backup script (Root)
+      ansible.builtin.copy:
+        dest: "/root/gitlab_backup.sh"
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          BACKUP_DIR="/root/gitlab_backups"
+          TIMESTAMP=$(date +'%Y%m%d_%H%M%S')
+          mkdir -p $BACKUP_DIR
+          tar -czvf $BACKUP_DIR/gitlab_backup_$TIMESTAMP.tar.gz /var/opt/gitlab/git-data/
+
+    - name: Ensure backup directory exists
+      ansible.builtin.file:
+        path: "/root/gitlab_backups"
+        state: directory
+        mode: "0755"
+
+    - name: Schedule Daily Backup via Cron (Root)
+      ansible.builtin.cron:
+        name: "GitLab Daily Backup"
+        job: "/root/gitlab_backup.sh"
+        minute: "0"
+        hour: "2"
