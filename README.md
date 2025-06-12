@@ -23,10 +23,12 @@ The installation and deployment of GitLab within a Docker container on an AWS EC
    Control Node:
    Instance Type: t3.micro
    Purpose: Runs Ansible to manage configurations and deployments.
+   
    Managed Node:
    Instance Type: t3.medium
    Additional EBS Volume: 25 GB (gp3)
    Purpose: Hosts Docker and GitLab deployment.
+   
 Both EC2 instances use Ubuntu as the base operating system.
 
 ## Configuration Steps
