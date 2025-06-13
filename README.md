@@ -43,18 +43,17 @@ sshpass -V
 ```
 
 Step 3: Enabling Password Authentication on Managed Node.
-```
-sudo vim /etc/ssh/sshd_config.d/60-cloudimg-setting.conf  # for enabling password authentication between managed node and control node.
-```
+
+```sudo vim /etc/ssh/sshd_config.d/60-cloudimg-setting.conf```  # for enabling password authentication between managed node and control node.
+
 PasswordAuthentication no                                 # will be in first line
 
 PasswordAuthentication yes                                # change it to yes from no
-```
-sudo systemctl restart ssh                                # restart the ssh service
-```
-```
-sudo passwd ubuntu                                        # set password 
-```
+
+```sudo systemctl restart ssh```                                # restart the ssh service
+
+
+```sudo passwd ubuntu```                                       # set password 
 
 
 ## Ansible_Playbooks
@@ -145,7 +144,8 @@ sudo passwd ubuntu                                        # set password
 3. backup.yml
 ```
 ---
-- hosts: target_servers
+- name: Backup GitLab Data
+  hosts: target_servers
   become: yes  # Ensure tasks run with root privileges
 
   tasks:
@@ -158,7 +158,7 @@ sudo passwd ubuntu                                        # set password
           BACKUP_DIR="/root/gitlab_backups"
           TIMESTAMP=$(date +'%Y%m%d_%H%M%S')
           mkdir -p $BACKUP_DIR
-          tar -czvf $BACKUP_DIR/gitlab_backup_$TIMESTAMP.tar.gz /var/opt/gitlab/git-data/
+          tar -czvf $BACKUP_DIR/gitlab_backup_$TIMESTAMP.tar.gz /srv/gitlab/data/git-data/
 
     - name: Ensure backup directory exists
       ansible.builtin.file:
@@ -172,6 +172,7 @@ sudo passwd ubuntu                                        # set password
         job: "/root/gitlab_backup.sh"
         minute: "0"
         hour: "2"
+
 ```
 
 ## Inventory file
