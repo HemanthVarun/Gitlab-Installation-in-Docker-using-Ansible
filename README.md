@@ -134,7 +134,7 @@ PasswordAuthentication yes                                # change it to yes fro
           - "443:443"
           - "2222:22"
         env:
-          GITLAB_ROOT_PASSWORD: "your_secure_password"
+          GITLAB_ROOT_PASSWORD: "Pbsvpbsv"
         volumes:
           - "/srv/gitlab/config:/etc/gitlab"
           - "/srv/gitlab/logs:/var/log/gitlab"
