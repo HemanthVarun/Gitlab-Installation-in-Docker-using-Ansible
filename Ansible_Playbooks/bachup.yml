@@ -1,5 +1,6 @@
 ---
-- hosts: target_servers
+- name: Backup GitLab Data
+  hosts: target_servers
   become: yes  # Ensure tasks run with root privileges
 
   tasks:
@@ -12,7 +13,7 @@
           BACKUP_DIR="/root/gitlab_backups"
           TIMESTAMP=$(date +'%Y%m%d_%H%M%S')
           mkdir -p $BACKUP_DIR
-          tar -czvf $BACKUP_DIR/gitlab_backup_$TIMESTAMP.tar.gz /var/opt/gitlab/git-data/
+          tar -czvf $BACKUP_DIR/gitlab_backup_$TIMESTAMP.tar.gz /srv/gitlab/data/git-data/
 
     - name: Ensure backup directory exists
       ansible.builtin.file:
@@ -26,3 +27,4 @@
         job: "/root/gitlab_backup.sh"
         minute: "0"
         hour: "2"
+
