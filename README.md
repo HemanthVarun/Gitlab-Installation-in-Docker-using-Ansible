@@ -44,16 +44,16 @@ sshpass -V
 
 Step 3: Enabling Password Authentication on Managed Node.
 
-```sudo vim /etc/ssh/sshd_config.d/60-cloudimg-setting.conf```  # for enabling password authentication between managed node and control node.
+``` sudo vim /etc/ssh/sshd_config.d/60-cloudimg-setting.conf ```  # for enabling password authentication between managed node and control node.
 
 PasswordAuthentication no                                 # will be in first line
 
 PasswordAuthentication yes                                # change it to yes from no
 
-```sudo systemctl restart ssh```                                # restart the ssh service
+``` sudo systemctl restart ssh ```                                # restart the ssh service
 
 
-```sudo passwd ubuntu```                                       # set password 
+``` sudo passwd ubuntu ```                                       # set password 
 
 
 ## Ansible_Playbooks
@@ -192,6 +192,15 @@ ansible-playbook -i /root/Ansible_Project/inventory.ini --ask-pass /root/Ansible
 ansible-playbook -i /root/Ansible_Project/inventory.ini --ask-pass /root/Ansible_Project/backup.yml
 ```
 
+
+## Path to the Gitlab repository storage
+```
+cd /var/opt/gitlab/git-data/repositories/@hashed/
+```
+## Command to list the files in the latest commit (HEAD)
+```
+git --git-dir=. ls-tree --name-only -r HEAD
+```
 ## Accessing the gitlab through browser:
 ```
 http://<managed-node-public-ip>
