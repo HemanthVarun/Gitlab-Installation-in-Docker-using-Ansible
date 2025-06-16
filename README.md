@@ -119,12 +119,12 @@ PasswordAuthentication yes                                # change it to yes fro
   become: yes
   tasks:
     - name: Pull GitLab Docker Image
-      docker_image:
+      ansible.builtin.docker_image:
         name: gitlab/gitlab-ce
         source: pull
 
     - name: Run GitLab Container
-      docker_container:
+      ansible.builtin.docker_container:
         name: gitlab
         image: gitlab/gitlab-ce
         state: started
