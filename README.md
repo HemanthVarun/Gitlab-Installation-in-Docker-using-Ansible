@@ -160,11 +160,10 @@ PasswordAuthentication yes                                # change it to yes fro
           mkdir -p $BACKUP_DIR
           tar -czvf $BACKUP_DIR/gitlab_backup_$TIMESTAMP.tar.gz /srv/gitlab/data/git-data/
 
-    - name: Ensure backup directory exists
+    - name: Ensure backup file exists
       ansible.builtin.file:
-        path: "/root/gitlab_backups"
-        state: directory
-        mode: "0755"
+        path: "/root/gitlab_backups/gitlab_backup_$TIMESTAMP.tar.gz"
+        state: file
 
     - name: Schedule Daily Backup via Cron (Root)
       ansible.builtin.cron:
